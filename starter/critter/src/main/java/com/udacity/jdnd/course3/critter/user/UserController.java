@@ -5,6 +5,7 @@ import com.udacity.jdnd.course3.critter.model.Employee;
 import com.udacity.jdnd.course3.critter.model.Pet;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
 import com.udacity.jdnd.course3.critter.service.EmployeeService;
+import com.udacity.jdnd.course3.critter.service.PetService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +26,12 @@ public class UserController {
 
     private CustomerService customerService;
     private EmployeeService employeeService;
+    private PetService petService;
 
-    public UserController(CustomerService customerService, EmployeeService employeeService) {
+    public UserController(CustomerService customerService, EmployeeService employeeService, PetService petService) {
         this.customerService = customerService;
         this.employeeService = employeeService;
+        this.petService = petService;
     }
 
     @PostMapping("/customer")
@@ -47,7 +50,9 @@ public class UserController {
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        Pet pet = petService.findPetById(petId);
+        return convertCustomerToCustomerDTO(pet.getOwner());
+
     }
 
     @PostMapping("/employee")
