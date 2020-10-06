@@ -1,13 +1,19 @@
 package com.udacity.jdnd.course3.critter.service;
 
+import com.google.common.collect.Sets;
 import com.udacity.jdnd.course3.critter.model.Employee;
 import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
 import com.udacity.jdnd.course3.critter.user.EmployeeDTO;
+import com.udacity.jdnd.course3.critter.user.EmployeeRequestDTO;
+import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class EmployeeService {
@@ -25,6 +31,18 @@ public class EmployeeService {
 
     public List<Employee> getAllEmployees() {
         return (List<Employee>) repository.findAll();
+    }
+
+    public List<Employee> findAllBySkillsAndDaysAvailable(EmployeeRequestDTO employeeRequestDTO) {
+        Set<EmployeeSkill> skillsNeeded = employeeRequestDTO.getSkills();
+        Set<DayOfWeek> dayNeeded = Sets.newHashSet(employeeRequestDTO.getDate().getDayOfWeek());
+        Set<Employee> unFiltered = repository.findBySkillsInAndDaysAvailableIn(skillsNeeded, dayNeeded);
+        List<Employee> filtered = new ArrayList<>();
+        for (Employee e : unFiltered) {
+            if(e.getSkills().containsAll(skillsNeeded) && e.getDaysAvailable().containsAll(dayNeeded))
+                filtered.add(e);
+        }
+        return filtered;
     }
 
     public Employee findEmployeeById(Long id) {
