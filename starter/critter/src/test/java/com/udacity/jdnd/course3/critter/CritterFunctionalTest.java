@@ -241,20 +241,21 @@ public class CritterFunctionalTest {
     }
 
 
-    private static EmployeeDTO createEmployeeDTO() {
+    static EmployeeDTO createEmployeeDTO() {
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setName("TestEmployee");
         employeeDTO.setSkills(Sets.newHashSet(EmployeeSkill.FEEDING, EmployeeSkill.PETTING));
         return employeeDTO;
     }
-    private static CustomerDTO createCustomerDTO() {
+
+    static CustomerDTO createCustomerDTO() {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setName("TestEmployee");
         customerDTO.setPhoneNumber("123-456-789");
         return customerDTO;
     }
 
-    private static PetDTO createPetDTO() {
+    static PetDTO createPetDTO() {
         PetDTO petDTO = new PetDTO();
         petDTO.setName("TestPet");
         petDTO.setType(PetType.CAT);

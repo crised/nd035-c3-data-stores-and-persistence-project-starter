@@ -17,7 +17,7 @@ public class Employee {
     private String name;
 
     @ElementCollection
-    private List<EmployeeSkill> skills;
+    private Set<EmployeeSkill> skills;
 
     @ElementCollection
     private Set<DayOfWeek> daysAvailable;
@@ -44,12 +44,11 @@ public class Employee {
         this.name = name;
     }
 
-
-    public List<EmployeeSkill> getSkills() {
+    public Set<EmployeeSkill> getSkills() {
         return skills;
     }
 
-    public void setSkills(List<EmployeeSkill> skills) {
+    public void setSkills(Set<EmployeeSkill> skills) {
         this.skills = skills;
     }
 
