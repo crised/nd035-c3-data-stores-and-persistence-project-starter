@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.pet;
 
+import com.udacity.jdnd.course3.critter.service.PetService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,6 +11,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/pet")
 public class PetController {
+
+    private PetService petService;
+
+    public PetController(PetService petService) {
+        this.petService = petService;
+    }
 
     @PostMapping
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
