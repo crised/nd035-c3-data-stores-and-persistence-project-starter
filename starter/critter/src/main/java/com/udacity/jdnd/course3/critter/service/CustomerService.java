@@ -1,6 +1,8 @@
 package com.udacity.jdnd.course3.critter.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import com.udacity.jdnd.course3.critter.model.Customer;
 import com.udacity.jdnd.course3.critter.repository.CustomerRepository;
 import com.udacity.jdnd.course3.critter.user.CustomerDTO;
@@ -21,7 +23,13 @@ public class CustomerService {
         return persistedCustomer;
     }
 
-    public List<Customer> getAllCustomers(){
+    public Customer findCustomerById(Long id) {
+        Optional<Customer> optionalCustomer = repository.findById(id);
+        if (optionalCustomer.isPresent()) return optionalCustomer.get();
+        throw new AppException();
+    }
+
+    public List<Customer> getAllCustomers() {
         return (List<Customer>) repository.findAll();
     }
 

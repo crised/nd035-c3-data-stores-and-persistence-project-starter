@@ -27,7 +27,7 @@ public class EmployeeService {
         return (List<Employee>) repository.findAll();
     }
 
-    public Employee getEmployee(Long id) {
+    public Employee findEmployeeById(Long id) {
         Optional<Employee> employeeOptional = repository.findById(id);
         if (employeeOptional.isPresent()) return employeeOptional.get();
         throw new AppException();
