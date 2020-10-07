@@ -33,6 +33,11 @@ public class PetController {
         return convertPetToPetDTO(petService.savePet(petDTO));
     }
 
+    @PostMapping("/{ownerId}")
+    public PetDTO savePet(@RequestBody PetDTO petDTO, @PathVariable long ownerId) {
+        petDTO.setOwnerId(ownerId);
+        return convertPetToPetDTO(petService.savePet(petDTO));    }
+
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
         return convertPetToPetDTO(petService.findPetById(petId));
