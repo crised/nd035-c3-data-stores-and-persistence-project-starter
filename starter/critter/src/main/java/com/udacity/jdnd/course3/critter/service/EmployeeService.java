@@ -9,6 +9,7 @@ import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Transactional
 public class EmployeeService {
 
     private EmployeeRepository repository;
@@ -49,6 +51,11 @@ public class EmployeeService {
         Optional<Employee> employeeOptional = repository.findById(id);
         if (employeeOptional.isPresent()) return employeeOptional.get();
         throw new AppException();
+    }
+
+    public void setEmployeeAvailability(Set<DayOfWeek> daysAvailable, long employeeId){
+        Employee employee = findEmployeeById(employeeId);
+        employee.setDaysAvailable(daysAvailable);
     }
 
     private Employee convertEmployeeDTOToEmployee(EmployeeDTO employeeDTO) {
