@@ -2,6 +2,7 @@ package com.udacity.jdnd.course3.critter.model;
 
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 
+import javax.annotation.Generated;
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Set;
 public class Employee {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
