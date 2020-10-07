@@ -4,6 +4,7 @@ import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -27,6 +28,13 @@ public class Schedule {
 
 
     public Schedule() {
+    }
+
+    public Schedule(boolean createEmptyLists){
+        if(createEmptyLists){
+            this.employees = new ArrayList<>();
+            this.pets = new ArrayList<>();
+        }
     }
 
     public long getId() {
