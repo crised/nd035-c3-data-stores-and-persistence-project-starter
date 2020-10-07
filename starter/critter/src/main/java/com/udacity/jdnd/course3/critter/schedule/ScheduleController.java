@@ -1,8 +1,10 @@
 package com.udacity.jdnd.course3.critter.schedule;
 
+import com.udacity.jdnd.course3.critter.model.Customer;
 import com.udacity.jdnd.course3.critter.model.Employee;
 import com.udacity.jdnd.course3.critter.model.Pet;
 import com.udacity.jdnd.course3.critter.model.Schedule;
+import com.udacity.jdnd.course3.critter.service.CustomerService;
 import com.udacity.jdnd.course3.critter.service.ScheduleService;
 import com.udacity.jdnd.course3.critter.user.EmployeeDTO;
 import org.springframework.beans.BeanUtils;
@@ -19,9 +21,11 @@ import java.util.stream.Collectors;
 public class ScheduleController {
 
     private ScheduleService scheduleService;
+    private CustomerService customerService;
 
-    public ScheduleController(ScheduleService scheduleService) {
+    public ScheduleController(ScheduleService scheduleService, CustomerService customerService) {
         this.scheduleService = scheduleService;
+        this.customerService = customerService;
     }
 
     @PostMapping
@@ -38,17 +42,21 @@ public class ScheduleController {
 
     @GetMapping("/pet/{petId}")
     public List<ScheduleDTO> getScheduleForPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        List<Schedule> schedules = scheduleService.findScheduleByPet(petId);
+        return schedules.stream().map(this::convertScheduleToScheduleDTO).collect(Collectors.toList());
     }
 
     @GetMapping("/employee/{employeeId}")
     public List<ScheduleDTO> getScheduleForEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        List<Schedule> schedules = scheduleService.findScheduleByEmployee(employeeId);
+        return schedules.stream().map(this::convertScheduleToScheduleDTO).collect(Collectors.toList());
     }
 
     @GetMapping("/customer/{customerId}")
     public List<ScheduleDTO> getScheduleForCustomer(@PathVariable long customerId) {
-        throw new UnsupportedOperationException();
+        Customer customer = customerService.findCustomerById(customerId);
+        List<Schedule> schedules = scheduleService.findScheduleByPets(customer.getPets());
+        return schedules.stream().map(this::convertScheduleToScheduleDTO).collect(Collectors.toList());
     }
 
     private ScheduleDTO convertScheduleToScheduleDTO(Schedule schedule) {
